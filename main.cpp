@@ -4,6 +4,6 @@
 using namespace std;
 
 int main() {
-    cout << "test: " << tambah(0, 0) << endl;
+    menu();
     return 0;
 }
