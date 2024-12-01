@@ -50,3 +50,55 @@ void menu() {
 int tambah(int a, int b) {
     return a + b;
 }
+
+void createListDosen(ListDosen &L){
+    first(L) = NULL;
+    last(L) = NULL;
+}
+
+addressDosen createElemenDosen(infotypeDosen X){
+    addressDosen P;
+    P = new elemenDosen;
+    info(P) = X;
+    next(P) = NULL;
+    prev(P) = NULL;
+    mataKuliah(P) = NULL;
+
+    return P;
+}
+
+void insertLastDosen(ListDosen &L, addressDosen P){
+    if(first(L) != NULL && last(L) != NULL){
+        next(last(L)) = P;
+        next(P) = first(L);
+        last(L) = P;
+    } else {
+        first(L) = P;
+        last(L) = P;
+    }
+}
+
+void insertFirstDosen(ListDosen &L, addressDosen P){
+    if(first(L) != NULL && last(L) != NULL){
+        next(P) = first(L);
+        next(last(L)) = P;
+        first(L) = P;
+    } else {
+        first(L) = P;
+        last(L) = P;
+    }
+}
+
+void insertAfterDosen(ListDosen &L, addressDosen Prec, addressDosen P){
+    next(P) = next(Prec);
+    next(Prec) = P;
+}
+
+void insertBeforeDosen(ListDosen &L, addressDosen Prec, addressDosen P){
+    addressDosen Q = first(L);
+    while(next(Q) != Prec){
+        Q = next(Q);
+    }
+    next(P) = Prec;
+    next(Q) = P;
+}

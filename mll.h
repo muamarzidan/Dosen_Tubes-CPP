@@ -48,5 +48,12 @@ struct ListDosen {
 
 int tambah(int a, int b);
 void menu();
+void createListDosen(ListDosen &L);
+addressDosen createElemenDosen(infotypeDosen X);
+void insertLastDosen(ListDosen &L, addressDosen P);
+void insertFirstDosen(ListDosen &L, addressDosen P);
+void insertAfterDosen(ListDosen &L, addressDosen Prec, addressDosen P);
+void insertBeforeDosen(ListDosen &L, addressDosen Prec, addressDosen P);
+void ShowDosen(ListDosen L);
 
 #endif
