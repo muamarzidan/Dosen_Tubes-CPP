@@ -7,6 +7,7 @@
 #define next(P) P->next
 #define info(P) P->info
 #define mataKuliah(P) P->mataKuliah
+#define NULL nullptr
 
 using namespace std;
 
@@ -29,7 +30,6 @@ typedef mataKuliah infotypeMataKuliah;
 typedef struct elemenMataKuliah *addressMataKuliah;
 
 struct elemenMataKuliah {
-    addressMataKuliah prev;
     infotypeMataKuliah info;
     addressMataKuliah next;
 };
@@ -46,14 +46,21 @@ struct ListDosen {
     addressDosen last;
 };
 
-int tambah(int a, int b);
 void menu();
 void createListDosen(ListDosen &L);
 addressDosen createElemenDosen(infotypeDosen X);
-void insertLastDosen(ListDosen &L, addressDosen P);
 void insertFirstDosen(ListDosen &L, addressDosen P);
-void insertAfterDosen(ListDosen &L, addressDosen Prec, addressDosen P);
-void insertBeforeDosen(ListDosen &L, addressDosen Prec, addressDosen P);
-void ShowDosen(ListDosen L);
+void insertLastDosen(ListDosen &L, addressDosen P);
+void deleteFirstDosen(ListDosen &L, addressDosen &P);
+void deleteLastDosen(ListDosen &L, addressDosen &P);
 
+void showDosen(ListDosen L);
+
+// void insertAfterDosen(ListDosen &L, addressDosen Prec, addressDosen P);
+// void insertBeforeDosen(ListDosen &L, addressDosen Prec, addressDosen P);
+// void deleteAfterDosen(ListDosen &L, addressDosen Prec, addressDosen &P);
+// void deleteBeforeDosen(ListDosen &L, addressDosen Prec, addressDosen &P);
+// void insertLastMataKuliah(addressDosen &D, addressMataKuliah P);
+// void insertFirstMataKuliah(addressDosen &D, addressMataKuliah P);
+// void insertAfterMataKuliah(addressDosen &D, addressMataKuliah Prec, addressMataKuliah P);
 #endif
