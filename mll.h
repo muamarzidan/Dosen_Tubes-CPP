@@ -47,14 +47,16 @@ struct ListDosen {
 };
 
 void menu();
+bool isEmpty(ListDosen L);
+
 void createListDosen(ListDosen &L);
 addressDosen createElemenDosen(infotypeDosen X);
 void insertFirstDosen(ListDosen &L, addressDosen P);
 void insertLastDosen(ListDosen &L, addressDosen P);
 void deleteFirstDosen(ListDosen &L, addressDosen &P);
 void deleteLastDosen(ListDosen &L, addressDosen &P);
-
 void showDosen(ListDosen L);
+void searchDosen(ListDosen L, string param);
 
 // void insertAfterDosen(ListDosen &L, addressDosen Prec, addressDosen P);
 // void insertBeforeDosen(ListDosen &L, addressDosen Prec, addressDosen P);
