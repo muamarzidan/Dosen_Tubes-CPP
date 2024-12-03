@@ -1,0 +1,11 @@
+FEATURE
+    URGENT
+        - Buat validasi setiap input data dosen/matkul pada bagian nama(matkul), kode(dosen, matkul) harus tidak boleh ada yang sama
+
+    OPTIONAL
+        - Buat fungsi showall data mata kuliah 
+
+
+BACA INI IZZZZ
+ITU GUA DAH BIKIN ALUR INSERT MATKUL SAMA HUBUNGINNYA, CUMA LU COBA DULU IZ, 
+MASIH BETA ITU WKKW, GUA MAU KELUAR DULU HAHA, BELUM DI LANJUT
