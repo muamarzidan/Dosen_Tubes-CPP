@@ -6,7 +6,7 @@
 #define prev(P) P->prev
 #define next(P) P->next
 #define info(P) P->info
-#define mataKuliah(P) P->mataKuliah
+#define matkul(P) P->mataKuliah
 #define NULL nullptr
 
 using namespace std;
@@ -46,6 +46,10 @@ struct ListDosen {
     addressDosen last;
 };
 
+// struct listMataKuliah {
+//     addressMataKuliah first;
+// };
+
 void menu();
 bool isEmpty(ListDosen L);
 
@@ -56,7 +60,7 @@ void insertLastDosen(ListDosen &L, addressDosen P);
 void deleteFirstDosen(ListDosen &L, addressDosen &P);
 void deleteLastDosen(ListDosen &L, addressDosen &P);
 void showDosen(ListDosen L);
-void searchDosen(ListDosen L, string param);
+void searchDosen(ListDosen L, string param, string opsi);
 
 // void insertAfterDosen(ListDosen &L, addressDosen Prec, addressDosen P);
 // void insertBeforeDosen(ListDosen &L, addressDosen Prec, addressDosen P);

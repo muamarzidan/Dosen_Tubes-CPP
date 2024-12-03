@@ -174,14 +174,14 @@ void menu() {
                         cin >> namaDosen;
                         cout << endl;
 
-                        searchDosen(L, namaDosen);
+                        searchDosen(L, namaDosen, pilihSearchDosen);
                     } else {
                         string kodeDosen;
                         cout << "Masukkan kode dosen : ";
                         cin >> kodeDosen;
                         cout << endl;
 
-                        searchDosen(L, kodeDosen);
+                        searchDosen(L, kodeDosen, pilihSearchDosen);
                     }
 
                     cout << "Ingin mancari data dosen lagi? (y/t) : ";
@@ -312,30 +312,48 @@ void showDosen(ListDosen L){
     }
 }
 
-void searchDosen(ListDosen L, string param){
-    addressDosen P = first(L);
-    bool found = false;
+void searchDosen(ListDosen L, string param, string opsi){
+    if (opsi == "1") {
+        addressDosen P = first(L);
+        bool found = false;
 
-    while (found == false && P != NULL) {
-        if (info(P).nama == param || info(P).kode == param){
-            cout << "Data dosen ditemukan :" << endl;
-            cout << "Nama   : " << info(P).nama << endl;
-            cout << "Kode   : " << info(P).kode << endl;
-            cout << "Gender : " << info(P).gender << endl;
-            found = true;
+        while (found == false && P != NULL) {
+            if (info(P).nama == param){
+                cout << "Data dosen ditemukan :" << endl;
+                cout << "Nama   : " << info(P).nama << endl;
+                cout << "Kode   : " << info(P).kode << endl;
+                cout << "Gender : " << info(P).gender << endl;
+                found = true;
+            }
+            P = next(P);
         }
-        P = next(P);
-    }
 
-    if (!found){
-        cout << "Data dosen tidak ditemukan, coba ketikan nama / kode dengan benar" << endl;
-        cout << endl;
+        if (!found){
+            cout << "Data dosen tidak ditemukan, coba ketikan nama dosen dengan benar" << endl;
+            cout << endl;
+        }
+    } else {
+        addressDosen P = first(L);
+        bool found = false;
+
+        while (found == false && P != NULL) {
+            if (info(P).kode == param){
+                cout << "eefef" << endl;
+                cout << "Data dosen ditemukan :" << endl;
+                cout << "Nama   : " << info(P).nama << endl;
+                cout << "Kode   : " << info(P).kode << endl;
+                cout << "Gender : " << info(P).gender << endl;
+                found = true;
+            }
+            P = next(P);
+        }
+
+        if (!found){
+            cout << "Data dosen tidak ditemukan, coba ketikan kode dosen dengan benar" << endl;
+            cout << endl;
+        }
     }
 }
-
-
-
-
 
 
 // void insertAfterDosen(ListDosen &L, addressDosen Prec, addressDosen P){
@@ -376,35 +394,6 @@ void searchDosen(ListDosen L, string param){
 //     next(P) = NULL;
 //     prev(P) = NULL;
 // }
-
-
-// void insertLastMataKuliah(addressDosen &D, addressMataKuliah P){
-//     if (mataKuliah(D) != NULL){
-//         addressMataKuliah Q = mataKuliah(D);
-
-//         while(next(Q) != mataKuliah(D)){
-//             Q = next(Q);
-//         }
-//         next(Q) = P;
-//     } else {
-//         mataKuliah(D) = P;
-//     }
-// }
-
-
-// void insertFirstMataKuliah(addressDosen &D, addressMataKuliah P){
-//     if (mataKuliah(D) != NULL){
-//         addressMataKuliah Q = mataKuliah(D);
-
-//         while(next(Q) != mataKuliah(D)){
-//             Q = next(Q);
-//         }
-//         next(Q) = P;
-//     } else {
-//         mataKuliah(D) = P;
-//     }
-// }
-
 
 // void insertAfterMataKuliah(addressDosen &D, addressMataKuliah Prec, addressMataKuliah P){
 //     next(P) = next(Prec);
