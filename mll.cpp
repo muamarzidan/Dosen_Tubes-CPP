@@ -519,7 +519,7 @@ void hubungkanDosenKeMataKuliah(ListDosen &L, ListMataKuliah &M) {
             cout << "Masukkan kode mata kuliah untuk dihubungkan : ";
             cin >> kodeMatkul;
             addressMataKuliah PM = searchMatkulByCode(M, kodeMatkul);
-            // CEK
+            // LANJUTIN
 
         }
     }
@@ -558,8 +558,8 @@ void showMataKuliahBelumDiambil(addressDosen P, ListMataKuliah M) {
     addressMataKuliah PM = first(M);
     P = first(L);
 
+    // LANJUTIN
 }
-
 
 // CEK
 void addMatkulToDosen(addressDosen P, addressMataKuliah PM) {
