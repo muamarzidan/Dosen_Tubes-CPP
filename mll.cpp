@@ -110,11 +110,12 @@ void menu() {
                     string pilihDeleteDosen;
                     cout << "Input 1 = delete first data dosen" << endl;
                     cout << "Input 2 = delete last data dosen" << endl;
+                    cout << "Input 3 = delete by kode dosen" << endl;
                     cout << "Pilih : ";
                     cin >> pilihDeleteDosen;
                     cout << endl;
 
-                    while (pilihDeleteDosen != "1" && pilihDeleteDosen != "2") {
+                    while (pilihDeleteDosen != "1" && pilihDeleteDosen != "2" && pilihDeleteDosen != "3") {
                         cout << "Pilihan tidak valid, mohon input angka 1 atau 2" << endl;
                         cout << "Pilih : ";
                         cin >> pilihDeleteDosen;
@@ -125,11 +126,56 @@ void menu() {
                         deleteFirstDosen(L, P, M);
                         cout << "Data dosen berhasil dihapus" << endl;
                         cout << endl;
-                    } else {
+                    } else if (pilihDeleteDosen == "2") {
                         addressDosen P;
                         deleteLastDosen(L, P, M);
                         cout << "Data dosen berhasil dihapus" << endl;
                         cout << endl;
+                    } else {
+                        string kodeDosen;
+                        cout << "Masukkan kode dosen yang ingin dihapus : ";
+                        cin >> kodeDosen;
+                        cout << endl;
+
+                        addressDosen P = searchDosenByCode(L, kodeDosen);
+
+                        if (P == NULL){
+                            cout << "Data dosen tidak ditemukan, coba ketikan kode dosen dengan benar" << endl;
+                            cout << endl;
+                        } else {
+                            if (mataKuliah(P) != NULL){
+                                addressMataKuliah Z = mataKuliah(P);
+
+                                while (Z != NULL){
+                                    addressMataKuliah temp = first(M);
+                                    info(Z).isTaken = false;
+                                    
+                                    while (temp != NULL){
+                                        if (info(temp).kode == info(Z).kode){
+                                            info(temp).isTaken = false;
+                                        }
+                                        temp = next(temp);
+                                    }
+
+                                    Z = next(Z);
+                                }
+                            }
+
+                            if (P == first(L)){
+                                deleteFirstDosen(L, P, M);
+                            } else if (P == last(L)){
+                                deleteLastDosen(L, P, M);
+                            } else {
+                                addressDosen prevP = prev(P);
+                                next(prevP) = next(P);
+                                prev(next(P)) = prevP;
+                                next(P) = NULL;
+                                prev(P) = NULL;
+                            }
+
+                            cout << "Data dosen berhasil dihapus" << endl;
+                            cout << endl;
+                        }
                     }
 
                     cout << "Ingin menghapus data dosen lagi? (y/t): ";
@@ -1126,7 +1172,6 @@ string toLowerCase(string s) {
 
     return s;
 }
-
 
 // void insertAfterDosen(ListDosen &L, addressDosen Prec, addressDosen P){
 //     next(P) = next(Prec);
