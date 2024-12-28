@@ -9,14 +9,12 @@ void menu() {
     createListDosen(L);
     createListMataKuliah(M);
     insertDataDummy(L, M);
-    
 
-
-    cout << "Selamat datang di Program Manajemen Data Dosen dan Mata Kuliah!" << endl;
-    cout << "\n\n" << endl;
-
+    cout << "=========================================================================" << endl;
+    cout << "==== Selamat datang di Program Manajemen Data Dosen dan Mata Kuliah! ====" << endl;
+    cout << "=========================================================================" << endl;
     while (true) {
-        cout << "============================== Menu =================================" << endl;
+        cout << "================================ Menu ===================================" << endl;
         cout << "1. Insert data dosen dari depan/belakang" << endl;
         cout << "2. Show all data dosen" << endl;
         cout << "3. Menghapus data dosen dan mata kuliah yang diajarnya" << endl;
@@ -97,8 +95,8 @@ void menu() {
                 }
             }
         } else if (pilihan == "2"){
-            cout << "============ Daftar Dosen ============" << endl;
-            showDosen(L);
+            cout << "============ Daftar Semua Dosen ============" << endl;
+            showAllDosen(L);
             cout << "=======================================" << endl;
         } else if (pilihan == "3") {
             if (isEmpty(L)){
@@ -304,7 +302,7 @@ void menu() {
                 while (loopSearch == "y") {
                     string pilihSearchDosen;
                     cout << "============ Daftar Dosen ============" << endl;
-                    showDosen(L);
+                    showAllDosen(L);
                     cout << "=======================================" << endl;
                     cout << "Pilih opsi mencari data dosen berdasarkan opsi dibawah :" << endl;
                     cout << "1. Nama" << endl;
@@ -387,7 +385,7 @@ void menu() {
                 while (loopSearch == "y") {
                     string pilihSearchDosen;
                     cout << "============ Daftar Dosen ============" << endl;
-                    showDosen(L);
+                    showAllDosen(L);
                     cout << "=======================================" << endl;
                     cout << "Pilih opsi mencari data dosen berdasarkan opsi dibawah :" << endl;
                     cout << "1. Nama" << endl;
@@ -466,6 +464,7 @@ void menu() {
                                 } else {
                                     next(prev) = next(PM);
                                 }
+                                info(PM).isTaken = false;
                                 delete PM;
                                 cout << "Data mata kuliah berhasil dihapus." << endl;
                             }
@@ -588,7 +587,7 @@ void deleteLastDosen(ListDosen &L, addressDosen &P){
     }
 }
 
-void showDosen(ListDosen L){
+void showAllDosen(ListDosen L){
     int i = 1;
     addressDosen P = first(L);
 
@@ -629,7 +628,7 @@ void searchDosen(ListDosen L, string param, string opsi){
             cout << "Data dosen tidak ditemukan, coba ketikan nama dosen dengan benar" << endl;
             cout << endl;
         }
-    } else {
+    } else if(opsi == "2") {
         addressDosen P = first(L);
         bool found = false;
 
@@ -658,6 +657,7 @@ void createListMataKuliah(ListMataKuliah &M) {
 addressMataKuliah createElemenMataKuliah(mataKuliah X) {
     addressMataKuliah PM = new elemenMataKuliah;
     PM->info = X;
+    PM->info.isTaken = false;
     PM->next = nullptr;
     return PM;
 }
@@ -698,9 +698,8 @@ void hubungkanDosenKeMataKuliah(ListDosen &L, ListMataKuliah &M) {
         string pilihSearchDosen, kodeDosen, namaDosen;
         addressDosen P = NULL;
         cout << "\n============ Daftar Dosen ============\n";
-        showDosen(L);
+        showAllDosen(L);
         cout << "======================================\n";
-        // Pilihan mencari dosen
         cout << "Pilih opsi mencari data dosen berdasarkan opsi di bawah:\n";
         cout << "1. Nama\n";
         cout << "2. Kode\n";
@@ -727,14 +726,13 @@ void hubungkanDosenKeMataKuliah(ListDosen &L, ListMataKuliah &M) {
         }
 
         if (P == NULL) {
-            cout << "Data dosen tidak ditemukan.\n";
+            cout << "Data dosen tidak ditemukan\n";
             cout << "Ingin mencari data dosen lagi? (y/t): ";
             cin >> loopSearch;
             loopSearch = toLowerCase(loopSearch);
             continue;
         }
 
-        // Data dosen ditemukan
         cout << "Data dosen ditemukan:\n";
         cout << "Nama   : " << info(P).nama << endl;
         cout << "Kode   : " << info(P).kode << endl;
@@ -742,14 +740,14 @@ void hubungkanDosenKeMataKuliah(ListDosen &L, ListMataKuliah &M) {
 
         string loopInsertV2 = "y";
         while (loopInsertV2 == "y") {
-            int countMataKuliahBelumDiambil = countMataKuliahBelumDiambilDosenTertentu(P, M);
+            int countMataKuliahBelumDiambil = countMataKuliahBelumDiambilDosenTertentuV2(P, M);
             if (countMataKuliahBelumDiambil == 0){
                 cout << "\nData mata kuliah telah terhubung semua.\nSilahkan tambahkan data mata kuliah terlebih dahulu untuk menambahkan mata kuliah ke dosen ini.\n";
                 break;
             }
             
             cout << "\n============ Daftar Mata Kuliah Yang Belum Diambil ============\n";
-            showMataKuliahBelumDiambilDosenTertentu(P, M);
+            showMataKuliahBelumDiambilDosenTertentuV2(P, M);
             cout << "Total mata kuliah yang belum diambil: " << countMataKuliahBelumDiambil << endl;
             cout << "================================================================\n";
 
@@ -762,7 +760,7 @@ void hubungkanDosenKeMataKuliah(ListDosen &L, ListMataKuliah &M) {
                 cout << "Data mata kuliah tidak ditemukan.\n";
                 continue;
             }
-            addMatkulToDosen(P, PM);
+            addMatkulToDosenV2(P, PM);
             cout << "\nData mata kuliah berhasil dihubungkan dengan dosen.\n\n";
 
             cout << "Ingin menghubungkan data dosen dengan mata kuliah lagi? (y/t): ";
@@ -819,7 +817,6 @@ void showAllMataKuliah(ListMataKuliah M) {
     }
 }
 
-// CEK
 void showMataKuliahBelumDiambilDosenTertentu(addressDosen P, ListMataKuliah M) {
     addressMataKuliah PM = first(M);
     while (PM != NULL) {
@@ -839,6 +836,20 @@ void showMataKuliahBelumDiambilDosenTertentu(addressDosen P, ListMataKuliah M) {
             cout << endl;
         }
 
+        PM = next(PM);
+    }
+}
+
+void showMataKuliahBelumDiambilDosenTertentuV2(addressDosen P, ListMataKuliah M) {
+    addressMataKuliah PM = first(M);
+
+    while (PM != NULL) {
+        if (!info(PM).isTaken) {
+            cout << "Kode : " << info(PM).kode << endl;
+            cout << "Nama : " << info(PM).nama << endl;
+            cout << "SKS  : " << info(PM).sks << endl;
+            cout << endl;
+        }
         PM = next(PM);
     }
 }
@@ -867,7 +878,40 @@ int countMataKuliahBelumDiambilDosenTertentu(addressDosen P, ListMataKuliah M) {
     return count;
 }
 
-// CEK
+int countMataKuliahBelumDiambilDosenTertentuV2(addressDosen P, ListMataKuliah M) {
+    int count = 0;
+    addressMataKuliah PM = first(M);
+
+    while (PM != NULL) {
+        if (!info(PM).isTaken) {
+            count++;
+        }
+        PM = next(PM);
+    }
+
+    return count;
+}
+
+void addMatkulToDosenV2(addressDosen P, addressMataKuliah PM) {
+    if (info(PM).isTaken) {
+        cout << "Mata kuliah ini sudah diambil oleh dosen lain.\n";
+        return;
+    }
+
+    addressMataKuliah Q = createElemenMataKuliah(info(PM));
+    info(PM).isTaken = true;
+
+    if (mataKuliah(P) == NULL) {
+        mataKuliah(P) = Q;
+    } else {
+        addressMataKuliah R = mataKuliah(P);
+        while (next(R) != NULL) {
+            R = next(R);
+        }
+        next(R) = Q;
+    }
+}
+
 void addMatkulToDosen(addressDosen P, addressMataKuliah PM) {
     addressMataKuliah Q = createElemenMataKuliah(info(PM));
 
@@ -900,9 +944,7 @@ void showMataKuliahYangDiajarDosenTertentu(addressDosen P) {
     cout << "Total SKS yang diajar: " << totalSKS << endl;
 }
 
-// CEK
 void showAllDosenWithMataKuliah(ListDosen L) {
-
     if (isEmpty(L)){
         cout << "Data dosen kosong, tidak ada data dosen yang bisa ditampilkan" << endl;
         cout << endl;
@@ -952,7 +994,7 @@ void countMataKuliahDosenTertentu(ListDosen L) {
 
     while (loopSearch == "y") {
         cout << "Data seluruh dosen" << endl;
-        showDosen(L);
+        showAllDosen(L);
         cout << "Cari data dosen berdasarkan KODE, untuk dihitung mata kuliahnya" << endl;
         cout << "Masukkan kode dosen : ";
         string kodeDosen;
@@ -975,7 +1017,6 @@ void countMataKuliahDosenTertentu(ListDosen L) {
             cout << endl;
         }
 
-        string loopSearch;
         cout << "Ingin mencari data dosen lagi? (y/t): ";
         cin >> loopSearch;
         loopSearch = toLowerCase(loopSearch);
@@ -992,26 +1033,6 @@ void countMataKuliahDosenTertentu(ListDosen L) {
             cout << endl;
             continue;
         }
-    }
-}
-
-void showAllDosen (ListDosen L){
-    addressDosen P = first(L);
-    int i = 1;
-    if (first(L) != NULL){
-        cout << info(P).nama << endl;
-        cout << info(P).kode << endl;
-        cout << info(P).gender << endl;
-        while (P != NULL){
-            cout << "Data Dosen : " << i << endl;
-            cout << "Nama   : " << info(P).nama << endl;
-            cout << "Kode   : " << info(P).kode << endl;
-            cout << "Gender    : " << info(P).gender << endl;
-
-            P = next(P);
-        }
-    } else {
-        cout << "Data dosen kosong" << endl;
     }
 }
 
@@ -1046,9 +1067,8 @@ void insertDataDummy(ListDosen &L, ListMataKuliah &M) {
     PM = createElemenMataKuliah(DummyMatkul);
     insertFirstMataKuliah(M, PM);
 
-    addMatkulToDosen(searchDosenByCode(L, "FEK"), searchMatkulByCode(M, "ALPRO-1"));
-    addMatkulToDosen(searchDosenByCode(L, "FEK"), searchMatkulByCode(M, "STD"));
-    addMatkulToDosen(searchDosenByCode(L, "MZD"), searchMatkulByCode(M, "ALPRO-1"));
+    addMatkulToDosenV2(searchDosenByCode(L, "FEK"), searchMatkulByCode(M, "STD"));
+    addMatkulToDosenV2(searchDosenByCode(L, "MZD"), searchMatkulByCode(M, "ALPRO-1"));
 }
 
 string toLowerCase(string s) {

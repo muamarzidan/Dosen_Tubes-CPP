@@ -24,6 +24,7 @@ struct mataKuliah {
     string nama;
     string kode;
     int sks;
+    bool isTaken;
 };
 
 typedef mataKuliah infotypeMataKuliah;
@@ -59,10 +60,10 @@ void insertFirstDosen(ListDosen &L, addressDosen P);
 void insertLastDosen(ListDosen &L, addressDosen P);
 void deleteFirstDosen(ListDosen &L, addressDosen &P);
 void deleteLastDosen(ListDosen &L, addressDosen &P);
-void showDosen(ListDosen L);
+void showAllDosen(ListDosen L);
 void searchDosen(ListDosen L, string param, string opsi);
-addressDosen cariDosenByKode(ListDosen L, string kode);
 int countMataKuliahBelumDiambilDosenTertentu(addressDosen P, ListMataKuliah M);
+int countMataKuliahBelumDiambilDosenTertentuV2(addressDosen P, ListMataKuliah M);
 void createListMataKuliah(ListMataKuliah &M);
 addressMataKuliah createElemenMataKuliah(mataKuliah X);
 void insertFirstMataKuliah(ListMataKuliah &M, addressMataKuliah PM);
@@ -71,13 +72,14 @@ void showAllMataKuliah(ListMataKuliah M);
 void hubungkanDosenKeMataKuliah(ListDosen &L, ListMataKuliah &M);
 addressMataKuliah searchMatkulByCode(ListMataKuliah M, string kode);
 void showMataKuliahBelumDiambilDosenTertentu(addressDosen P, ListMataKuliah M);
+void showMataKuliahBelumDiambilDosenTertentuV2(addressDosen P, ListMataKuliah M);
 void addMatkulToDosen(addressDosen P, addressMataKuliah PM);
+void addMatkulToDosenV2(addressDosen P, addressMataKuliah PM);
 void showAllDosenWithMataKuliah(ListDosen L);
 addressDosen searchDosenByCode(ListDosen L, string kode);
 addressDosen searchDosenByName(ListDosen L, string name);
 void showMataKuliahYangDiajarDosenTertentu(addressDosen P);
 void countMataKuliahDosenTertentu(ListDosen L);
-void showAllDosen(ListDosen L);
 
 string toLowerCase(string s);
 void insertDataDummy(ListDosen &L, ListMataKuliah &M);
