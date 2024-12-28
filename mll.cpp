@@ -122,12 +122,12 @@ void menu() {
 
                     if (pilihDeleteDosen == "1") {
                         addressDosen P;
-                        deleteFirstDosen(L, P);
+                        deleteFirstDosen(L, P, M);
                         cout << "Data dosen berhasil dihapus" << endl;
                         cout << endl;
                     } else {
                         addressDosen P;
-                        deleteLastDosen(L, P);
+                        deleteLastDosen(L, P, M);
                         cout << "Data dosen berhasil dihapus" << endl;
                         cout << endl;
                     }
@@ -465,7 +465,15 @@ void menu() {
                                     next(prev) = next(PM);
                                 }
                                 info(PM).isTaken = false;
+
+                                addressMataKuliah PN = searchMatkulByCode(M, info(PM).kode);
+
+                                if (PN != NULL) {
+                                    info(PN).isTaken = false;
+                                }
+\
                                 delete PM;
+
                                 cout << "Data mata kuliah berhasil dihapus." << endl;
                             }
                             cout << endl;
@@ -557,9 +565,28 @@ void insertLastDosen(ListDosen &L, addressDosen P){
     }
 }
 
-void deleteFirstDosen(ListDosen &L, addressDosen &P){
+void deleteFirstDosen(ListDosen &L, addressDosen &P, ListMataKuliah &M){
     if (!isEmpty(L)){
         P = first(L);
+        
+        if (mataKuliah(P) != NULL){
+            addressMataKuliah Z = mataKuliah(P);
+
+            while (Z != NULL){
+                addressMataKuliah temp = first(M);
+                info(Z).isTaken = false;
+                
+                while (temp != NULL){
+                    if (info(temp).kode == info(Z).kode){
+                        info(temp).isTaken = false;
+                    }
+                    temp = next(temp);
+                }
+
+                Z = next(Z);
+            }
+        }
+
         if (first(L) == last(L)){
             first(L) = NULL;
             last(L) = NULL;
@@ -572,9 +599,28 @@ void deleteFirstDosen(ListDosen &L, addressDosen &P){
     }
 }
 
-void deleteLastDosen(ListDosen &L, addressDosen &P){
+void deleteLastDosen(ListDosen &L, addressDosen &P, ListMataKuliah &M){
     if (!isEmpty(L)){
         P = last(L);
+
+        if (mataKuliah(P) != NULL){
+            addressMataKuliah Z = mataKuliah(P);
+
+            while (Z != NULL){
+                addressMataKuliah temp = first(M);
+                info(Z).isTaken = false;
+                
+                while (temp != NULL){
+                    if (info(temp).kode == info(Z).kode){
+                        info(temp).isTaken = false;
+                    }
+                    temp = next(temp);
+                }
+
+                Z = next(Z);
+            }
+        }
+
         if (first(L) == last(L)){
             first(L) = NULL;
             last(L) = NULL;
