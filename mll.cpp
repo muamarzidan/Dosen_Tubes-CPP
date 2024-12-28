@@ -550,8 +550,8 @@ void menu() {
         } else if (pilihan == "12") {
             cout << "Berikut adalah data developer dari program ini : " << endl;
             cout << "Developer 1 : " << endl;
-            cout << "Nama  : Muamar Zidan" << endl;
-            cout << "NIM   : " << endl;
+            cout << "Nama  : Muamar Zidan Tri Antoro" << endl;
+            cout << "NIM   : 103012300381" << endl;
             cout << "Kelas : IF-47-11\n" << endl;
 
             cout << "Developer 2 : " << endl;
