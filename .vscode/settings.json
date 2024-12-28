@@ -65,6 +65,7 @@
     "string": "cpp",
     "istream": "cpp",
     "*.tcc": "cpp",
-    "limits": "cpp"
+    "limits": "cpp",
+    "algorithm": "cpp"
   }
 }

@@ -8,7 +8,6 @@ void menu() {
     ListMataKuliah M;
     createListDosen(L);
     createListMataKuliah(M);
-    
     insertDataDummy(L, M);
     
 
@@ -380,7 +379,7 @@ void menu() {
         } else if (pilihan == "10") {
             cout << "Menghapus data mata kuliah yang diajar oleh dosen tertentu" << endl;
         } else if (pilihan == "11") {
-            cout << "Menghitung jumlah data mata kuliah yang diajar oleh dosen tertentu" << endl;
+            countMataKuliahDosenTertentu(L);
         } else if (pilihan == "12") {
             cout << "Berikut adalah data developer dari program ini : " << endl;
             cout << "Developer 1 : " << endl;
@@ -663,7 +662,6 @@ void hubungkanDosenKeMataKuliah(ListDosen &L, ListMataKuliah &M) {
     }
 }
 
-
 addressDosen searchDosenByCode(ListDosen L, string kode) {
     addressDosen P = first(L);
     while (P != NULL) {
@@ -833,6 +831,74 @@ void showAllDosenWithMataKuliah(ListDosen L) {
     
 
     
+}
+
+void countMataKuliahDosenTertentu(ListDosen L) {
+    string loopSearch = "y";
+
+    while (loopSearch == "y") {
+        cout << "Data seluruh dosen" << endl;
+        showDosen(L);
+        cout << "Cari data dosen berdasarkan KODE, untuk dihitung mata kuliahnya" << endl;
+        cout << "Masukkan kode dosen : ";
+        string kodeDosen;
+        cin >> kodeDosen;
+
+        addressDosen P = searchDosenByCode(L, kodeDosen);
+        if (P == NULL) {
+            cout << "Data dosen tidak ditemukan, coba ketikan kode dosen dengan benar" << endl;
+            cout << endl;
+        } else {
+            cout<< "Data dosen ditemukan :" << endl;
+            cout << "Total mata kuliah yang diajar oleh dosen : " << info(P).nama << " adalah ";
+            addressMataKuliah PM = mataKuliah(P);
+            int count = 0;
+            while (PM != NULL) {
+                count++;
+                PM = next(PM);
+            }
+            cout << count << " mata kuliah" << endl;
+            cout << endl;
+        }
+
+        string loopSearch;
+        cout << "Ingin mencari data dosen lagi? (y/t): ";
+        cin >> loopSearch;
+        loopSearch = toLowerCase(loopSearch);
+        while (loopSearch != "y" && loopSearch != "t") {
+            cout << "Pilihan tidak valid, mohon input huruf y atau t" << endl;
+            cout << "Pilih : ";
+            cin >> loopSearch;
+        }
+
+        if (loopSearch == "t") {
+            cout << endl;
+            break;
+        } else {
+            cout << endl;
+            continue;
+        }
+    }
+}
+
+void showAllDosen (ListDosen L){
+    addressDosen P = first(L);
+    int i = 1;
+    if (first(L) != NULL){
+        cout << info(P).nama << endl;
+        cout << info(P).kode << endl;
+        cout << info(P).gender << endl;
+        while (P != NULL){
+            cout << "Data Dosen : " << i << endl;
+            cout << "Nama   : " << info(P).nama << endl;
+            cout << "Kode   : " << info(P).kode << endl;
+            cout << "Gender    : " << info(P).gender << endl;
+
+            P = next(P);
+        }
+    } else {
+        cout << "Data dosen kosong" << endl;
+    }
 }
 
 void insertDataDummy(ListDosen &L, ListMataKuliah &M) {

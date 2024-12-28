@@ -76,6 +76,8 @@ void showAllDosenWithMataKuliah(ListDosen L);
 addressDosen searchDosenByCode(ListDosen L, string kode);
 addressDosen searchDosenByName(ListDosen L, string name);
 void showMataKuliahYangDiajarDosenTertentu(addressDosen P);
+void countMataKuliahDosenTertentu(ListDosen L);
+void showAllDosen(ListDosen L);
 
 string toLowerCase(string s);
 void insertDataDummy(ListDosen &L, ListMataKuliah &M);
