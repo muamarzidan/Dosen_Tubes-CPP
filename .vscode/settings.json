@@ -61,6 +61,10 @@
     "iostream": "cpp",
     "ostream": "cpp",
     "new": "cpp",
-    "typeinfo": "cpp"
+    "typeinfo": "cpp",
+    "string": "cpp",
+    "istream": "cpp",
+    "*.tcc": "cpp",
+    "limits": "cpp"
   }
 }

@@ -8,6 +8,13 @@ void menu() {
     ListMataKuliah M;
     createListDosen(L);
     createListMataKuliah(M);
+    
+    insertDataDummy(L, M);
+    
+
+
+    cout << "Selamat datang di Program Manajemen Data Dosen dan Mata Kuliah!" << endl;
+    cout << "\n\n" << endl;
 
     while (true) {
         cout << "============================== Menu =================================" << endl;
@@ -16,17 +23,20 @@ void menu() {
         cout << "3. Menghapus data dosen dan mata kuliah yang diajarnya" << endl;
         cout << "4. Mencari data dosen" << endl;
         cout << "5. Insert data mata kuliah" << endl;
-        cout << "6. Menghubungkan data dosen ke data mata kuliah" << endl;
-        cout << "7. Menampilkan seluruh data dosen beserta mata kuliah yang diajarnya" << endl;
-        cout << "8. Mencari data mata kuliah yang diajar oleh dosen tertentu" << endl;
-        cout << "9. Menghapus data mata kuliah yang diajar oleh dosen tertentu" << endl;
-        cout << "10. Menghitung jumlah data mata kuliah yang diajar oleh dosen tertentu" << endl;
-        cout << "11. Exit" << endl;
+        cout << "6. Show all data mata kuliah" << endl;
+        cout << "7. Menghubungkan data dosen ke data mata kuliah" << endl;
+        cout << "8. Menampilkan seluruh data dosen beserta mata kuliah yang diajarnya" << endl;
+        cout << "9. Mencari data mata kuliah yang diajar oleh dosen tertentu" << endl;
+        cout << "10. Menghapus data mata kuliah yang diajar oleh dosen tertentu" << endl;
+        cout << "11. Menghitung jumlah data mata kuliah yang diajar oleh dosen tertentu" << endl;
+        cout << "12. Developer" << endl;
+        cout << "13. Exit" << endl;
         cout << "Pilih : ";
         string pilihan;
         cin >> pilihan;
         cout << endl;
-        if (pilihan == "11") {
+        if (pilihan == "13") {
+            cout << "Terima kasih telah menggunakan program kami!" << endl;
             break;
         } else if (pilihan == "1") {
             string loopInsert;
@@ -37,9 +47,15 @@ void menu() {
                 string pilihInsertDosen;
 
                 cout << "Masukkan nama dosen: ";
-                cin >> X.nama;
+                cin.ignore();
+                getline(cin, X.nama);
                 cout << "Masukkan kode dosen: ";
                 cin >> X.kode;
+                while (searchDosenByCode(L, X.kode) != NULL) {
+                    cout << "Kode dosen sudah ada, mohon masukkan kode dosen yang berbeda." << endl;
+                    cout << "Masukkan kode dosen: ";
+                    cin >> X.kode;
+                }
                 cout << "Masukan gender dosen: ";
                 cin >> X.gender;
                 cout << endl;
@@ -66,6 +82,7 @@ void menu() {
 
                 cout << "Ingin memasukkan data lagi? (y/t): ";
                 cin >> loopInsert;
+                loopInsert = toLowerCase(loopInsert);
                 while (loopInsert != "y" && loopInsert != "t") {
                     cout << "Pilihan tidak valid, mohon input huruf y atau t" << endl;
                     cout << "Pilih : ";
@@ -83,6 +100,7 @@ void menu() {
         } else if (pilihan == "2"){
             cout << "============ Daftar Dosen ============" << endl;
             showDosen(L);
+            cout << "=======================================" << endl;
         } else if (pilihan == "3") {
             if (isEmpty(L)){
                 cout << "Data dosen kosong, tidak ada data dosen yang bisa dihapus" << endl;
@@ -119,6 +137,7 @@ void menu() {
 
                     cout << "Ingin menghapus data dosen lagi? (y/t): ";
                     cin >> loopDelete;
+                    loopDelete = toLowerCase(loopDelete);
                     while (loopDelete != "y" && loopDelete != "t") {
                         cout << "Pilihan tidak valid, mohon input huruf y atau t" << endl;
                         cout << "Pilih : ";
@@ -155,11 +174,12 @@ void menu() {
                     cout << "Pilih opsi mencari data dosen berdasarkan opsi dibawah :" << endl;
                     cout << "1. Nama" << endl;
                     cout << "2. Kode" << endl;
+                    cout << "0. Kembali ke MENU" << endl;
                     cout << "Pilih : ";
                     cin >> pilihSearchDosen;
                     cout << endl;
 
-                    while (pilihSearchDosen != "1" && pilihSearchDosen != "2") {
+                    while (pilihSearchDosen != "1" && pilihSearchDosen != "2" && pilihSearchDosen != "0") {
                         cout << "Pilihan tidak valid, mohon input angka 1 atau 2" << endl;
                         cout << "Pilih : ";
                         cin >> pilihSearchDosen;
@@ -168,10 +188,14 @@ void menu() {
                     if (pilihSearchDosen == "1") {
                         string namaDosen;
                         cout << "Masukkan nama dosen : ";
-                        cin >> namaDosen;
+                        cin.ignore();
+                        getline(cin, namaDosen);
                         cout << endl;
 
                         searchDosen(L, namaDosen, pilihSearchDosen);
+                    } else if (pilihSearchDosen == "0") {
+                        cout << endl;
+                        break;
                     } else {
                         string kodeDosen;
                         cout << "Masukkan kode dosen : ";
@@ -181,12 +205,14 @@ void menu() {
                         searchDosen(L, kodeDosen, pilihSearchDosen);
                     }
 
-                    cout << "Ingin mancari data dosen lagi? (y/t) : ";
+                    cout << "Ingin mencari data dosen lagi? (y/t) : ";
                     cin >> loopSearch;
+                    loopSearch = toLowerCase(loopSearch);
                     while (loopSearch != "y" && loopSearch != "t") {
                         cout << "Pilihan tidak valid, mohon input huruf y atau t" << endl;
                         cout << "Pilih : ";
                         cin >> loopSearch;
+                        loopSearch = toLowerCase(loopSearch);
                     }
 
                     if (loopSearch == "t") {
@@ -204,14 +230,20 @@ void menu() {
             
             while (loopInsert == "y") {
                 mataKuliah MK;
+                cout << "Masukkan nama mata kuliah : ";
+                cin.ignore();
+                getline(cin, MK.nama);
                 cout << "Masukkan kode mata kuliah : ";
                 cin >> MK.kode;
-                cout << "Masukkan nama mata kuliah : ";
-                cin >> MK.nama;
+                while (searchMatkulByCode(M, MK.kode) != NULL) {
+                    cout << "Kode mata kuliah sudah ada, mohon masukkan kode mata kuliah yang berbeda." << endl;
+                    cout << "Masukkan kode mata kuliah: ";
+                    cin >> MK.kode;
+                }
                 cout << "Masukkan jumlah SKS : ";
                 cin >> MK.sks;
 
-                while (cin.fail() || MK.sks < 1 || MK.sks > 5) {
+                while (MK.sks < 1 || MK.sks > 5) {
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');
                     cout << "Jumlah SKS harus berupa angka antara 1 sampai 5." << endl;
@@ -239,6 +271,7 @@ void menu() {
 
                 cout << "Ingin memasukkan data lagi? (y/t): ";
                 cin >> loopInsert;
+                loopInsert = toLowerCase(loopInsert);
                 while (loopInsert != "y" && loopInsert != "t") {
                     cout << "Pilihan tidak valid, mohon input huruf y atau t" << endl;
                     cout << "Pilih : ";
@@ -253,16 +286,113 @@ void menu() {
                     continue;
                 }
             }
-        } else if (pilihan == "6") {
-            hubungkanDosenKeMataKuliah(L, M);
+        } else if (pilihan == "6"){
+            cout << "============ Daftar Mata Kuliah Yang Terdaftar ============\n" << endl;
+            showAllMataKuliah(M);
+            cout << "=============================================================" << endl;
         } else if (pilihan == "7") {
-            showAllDosenWithMataKuliah(L);
+            hubungkanDosenKeMataKuliah(L, M);
         } else if (pilihan == "8") {
-            cout << "Mencari data mata kuliah yang diajar oleh dosen tertentu" << endl;
+            showAllDosenWithMataKuliah(L);
         } else if (pilihan == "9") {
-            cout << "Menghapus data mata kuliah yang diajar oleh dosen tertentu" << endl;
+            if (isEmpty(L)){
+                cout << "Data dosen kosong, tidak ada data dosen yang bisa dicari" << endl;
+                cout << endl;
+            } else {
+                string loopSearch;
+                loopSearch = "y";
+
+                while (loopSearch == "y") {
+                    string pilihSearchDosen;
+                    cout << "============ Daftar Dosen ============" << endl;
+                    showDosen(L);
+                    cout << "=======================================" << endl;
+                    cout << "Pilih opsi mencari data dosen berdasarkan opsi dibawah :" << endl;
+                    cout << "1. Nama" << endl;
+                    cout << "2. Kode" << endl;
+                    cout << "0. Kembali ke MENU" << endl;
+                    cout << "Pilih : ";
+                    cin >> pilihSearchDosen;
+                    cout << endl;
+                    addressDosen P;
+
+                    while (pilihSearchDosen != "1" && pilihSearchDosen != "2" && pilihSearchDosen != "0") {
+                        cout << "Pilihan tidak valid, mohon input angka 1 atau 2" << endl;
+                        cout << "Pilih : ";
+                        cin >> pilihSearchDosen;
+                    }
+
+                    if (pilihSearchDosen == "1") {
+                        string namaDosen;
+                        cout << "Masukkan nama dosen : ";
+                        cin.ignore();
+                        getline(cin, namaDosen);
+                        cout << endl;
+
+                        P = searchDosenByName(L, namaDosen);
+
+                        if (P == NULL){
+                            cout << "Data dosen tidak ditemukan, coba ketikan nama dosen dengan benar" << endl;
+                            cout << endl;
+                        }
+                    } else if (pilihSearchDosen == "0") {
+                        cout << endl;
+                        break;
+                    } else {
+                        string kodeDosen;
+                        cout << "Masukkan kode dosen : ";
+                        cin >> kodeDosen;
+                        cout << endl;
+
+                        P = searchDosenByCode(L, kodeDosen);
+
+                        if (P == NULL){
+                            cout << "Data dosen tidak ditemukan, coba ketikan kode dosen dengan benar" << endl;
+                            cout << endl;
+                        }
+                    }
+
+                    if (P != NULL){
+                        showMataKuliahYangDiajarDosenTertentu(P);
+                    }
+
+                    cout << "Ingin mencari data dosen lagi? (y/t) : ";
+                    cin >> loopSearch;
+                    loopSearch = toLowerCase(loopSearch);
+                    while (loopSearch != "y" && loopSearch != "t") {
+                        cout << "Pilihan tidak valid, mohon input huruf y atau t" << endl;
+                        cout << "Pilih : ";
+                        cin >> loopSearch;
+                        loopSearch = toLowerCase(loopSearch);
+                    }
+
+                    if (loopSearch == "t") {
+                        cout << endl;
+                        break;
+                    } else {
+                        cout << endl;
+                        continue;
+                    }
+                }
+            }
+            
+
         } else if (pilihan == "10") {
+            cout << "Menghapus data mata kuliah yang diajar oleh dosen tertentu" << endl;
+        } else if (pilihan == "11") {
             cout << "Menghitung jumlah data mata kuliah yang diajar oleh dosen tertentu" << endl;
+        } else if (pilihan == "12") {
+            cout << "Berikut adalah data developer dari program ini : " << endl;
+            cout << "Developer 1 : " << endl;
+            cout << "Nama  : Muamar Zidan" << endl;
+            cout << "NIM   : " << endl;
+            cout << "Kelas : IF-47-11\n" << endl;
+
+            cout << "Developer 2 : " << endl;
+            cout << "Nama  : Faiz Elfahad Kurniawan" << endl;
+            cout << "NIM   : 103012300408" << endl;
+            cout << "Kelas : IF-47-11" << endl;
+            cout << endl;
         } else {
             cout << "Pilihan tidak valid" << endl;
         }
@@ -441,89 +571,98 @@ void insertLastMataKuliah(ListMataKuliah &M, addressMataKuliah PM) {
 }
 
 void hubungkanDosenKeMataKuliah(ListDosen &L, ListMataKuliah &M) {
-    string kodeDosen, kodeMatkul, loopInsertV2;
-
-    if (isEmpty(L) && first(M) == NULL) {
-        cout << "Ada data dosen atau mata kuliah yang masing kosong, tambahkan data terlebih dahulu\n";
-        cout << endl;
+    if (isEmpty(L)) {
+        cout << "Data Dosen Masih Kosong, silakan tambahkan data dosen terlebih dahulu.\n";
         return;
-    } else {
+    }
+    if (first(M) == NULL) {
+        cout << "Data Mata Kuliah Masih Kosong, silakan tambahkan data mata kuliah terlebih dahulu.\n";
+        return;
+    }
+
+    string loopSearch = "y";
+    while (loopSearch == "y") {
+        string pilihSearchDosen, kodeDosen, namaDosen;
+        addressDosen P = NULL;
         cout << "\n============ Daftar Dosen ============\n";
         showDosen(L);
-        addressDosen P;
-        string loopSearch;
-        loopSearch = "y";
-        
-        while (loopSearch == "y") {
-            string pilihSearchDosen;
-            cout << "Pilih opsi mencari data dosen berdasarkan opsi dibawah :" << endl;
-            cout << "1. Nama" << endl;
-            cout << "2. Kode" << endl;
-            cout << "Pilih : ";
-            cin >> pilihSearchDosen;
-            cout << endl;
+        cout << "======================================\n";
+        // Pilihan mencari dosen
+        cout << "Pilih opsi mencari data dosen berdasarkan opsi di bawah:\n";
+        cout << "1. Nama\n";
+        cout << "2. Kode\n";
+        cout << "0. Kembali ke MENU\n";
+        cout << "Pilih: ";
+        cin >> pilihSearchDosen;
+        cout << endl;
 
-            while (pilihSearchDosen != "1" && pilihSearchDosen != "2") {
-                cout << "Pilihan tidak valid, mohon input angka 1 atau 2" << endl;
-                cout << "Pilih : ";
-                cin >> pilihSearchDosen;
-            }
-
-            if (pilihSearchDosen == "1") {
-                string namaDosen;
-                cout << "Masukkan nama dosen : ";
-                cin >> namaDosen;
-                cout << endl;
-
-                searchDosenByName(L, namaDosen);
-                P = searchDosenByName(L, namaDosen);
-            } else {
-                string kodeDosen;
-                cout << "Masukkan kode dosen : ";
-                cin >> kodeDosen;
-                cout << endl;
-                
-                searchDosenByName(L, kodeDosen);
-                P = searchDosenByName(L, kodeDosen);
-            }
-
-            if (P != NULL) {
-                cout << "Data dosen ditemukan :" << endl;
-                cout << "Nama   : " << info(P).nama << endl;
-                cout << "Kode   : " << info(P).kode << endl;
-                cout << "Gender : " << info(P).gender << endl;
-            } else {
-                cout << "Data dosen tidak ditemukan, silahkan coba lagi" << endl;
-                cout << "Ingin mancari data dosen lagi? (y/t) : ";
-                cin >> loopSearch;
-                while (loopSearch != "y" && loopSearch != "t") {
-                    cout << "Pilihan tidak valid, mohon input huruf y atau t" << endl;
-                    cout << "Pilih : ";
-                    cin >> loopSearch;
-                }
-
-                if (loopSearch == "t") {
-                    cout << endl;
-                    break;
-                } else {
-                    cout << endl;
-                    continue;
-                }
-            }
+        if (pilihSearchDosen == "1") {
+            cout << "Masukkan nama dosen: ";
+            cin.ignore();
+            getline(cin, namaDosen);
+            P = searchDosenByName(L, namaDosen);
+        } else if (pilihSearchDosen == "2") {
+            cout << "Masukkan kode dosen: ";
+            cin >> kodeDosen;
+            P = searchDosenByCode(L, kodeDosen);
+        } else if (pilihSearchDosen == "0") {
+            cout << "Kembali ke MENU.\n";
+            break;
+        } else {
+            cout << "Pilihan tidak valid.\n";
+            continue;
         }
 
-        loopInsertV2 == "y";
-        while (P != NULL && loopInsertV2 == "y") {
-            cout << "\n============ Daftar Mata Kuliah ============\n";
-            showMataKuliahBelumDiambil(P, M);
-            cout << "Masukkan kode mata kuliah untuk dihubungkan : ";
+        if (P == NULL) {
+            cout << "Data dosen tidak ditemukan.\n";
+            cout << "Ingin mencari data dosen lagi? (y/t): ";
+            cin >> loopSearch;
+            loopSearch = toLowerCase(loopSearch);
+            continue;
+        }
+
+        // Data dosen ditemukan
+        cout << "Data dosen ditemukan:\n";
+        cout << "Nama   : " << info(P).nama << endl;
+        cout << "Kode   : " << info(P).kode << endl;
+        cout << "Gender : " << info(P).gender << endl;
+
+        string loopInsertV2 = "y";
+        while (loopInsertV2 == "y") {
+            int countMataKuliahBelumDiambil = countMataKuliahBelumDiambilDosenTertentu(P, M);
+            if (countMataKuliahBelumDiambil == 0){
+                cout << "\nData mata kuliah telah terhubung semua.\nSilahkan tambahkan data mata kuliah terlebih dahulu untuk menambahkan mata kuliah ke dosen ini.\n";
+                break;
+            }
+            
+            cout << "\n============ Daftar Mata Kuliah Yang Belum Diambil ============\n";
+            showMataKuliahBelumDiambilDosenTertentu(P, M);
+            cout << "Total mata kuliah yang belum diambil: " << countMataKuliahBelumDiambil << endl;
+            cout << "================================================================\n";
+
+            cout << "Masukkan kode mata kuliah untuk dihubungkan: ";
+            string kodeMatkul;
             cin >> kodeMatkul;
             addressMataKuliah PM = searchMatkulByCode(M, kodeMatkul);
-            // LANJUTIN
 
+            if (PM == NULL) {
+                cout << "Data mata kuliah tidak ditemukan.\n";
+                continue;
+            }
+            addMatkulToDosen(P, PM);
+            cout << "\nData mata kuliah berhasil dihubungkan dengan dosen.\n\n";
+
+            cout << "Ingin menghubungkan data dosen dengan mata kuliah lagi? (y/t): ";
+            cin >> loopInsertV2;
+            loopInsertV2 = toLowerCase(loopInsertV2);
         }
+
+        cout << "Ingin mencari data dosen lagi? (y/t): ";
+        cin >> loopSearch;
+        loopSearch = toLowerCase(loopSearch);
     }
 }
+
 
 addressDosen searchDosenByCode(ListDosen L, string kode) {
     addressDosen P = first(L);
@@ -552,58 +691,194 @@ addressMataKuliah searchMatkulByCode(ListMataKuliah M, string kode) {
     return NULL;
 }
 
-// CEK
-void showMataKuliahBelumDiambil(addressDosen P, ListMataKuliah M) {
-    ListDosen L;
+void showAllMataKuliah(ListMataKuliah M) {
     addressMataKuliah PM = first(M);
-    P = first(L);
+    int i = 1;
 
-    // LANJUTIN
+    while (PM != NULL) {
+        cout << "Data Mata Kuliah " << i << " : " << endl;
+        cout << "Nama : " << info(PM).nama << endl;
+        cout << "Kode : " << info(PM).kode << endl;
+        cout << "SKS  : " << info(PM).sks << endl;
+        cout << endl;
+
+        PM = next(PM);
+        i++;
+    }
+}
+
+// CEK
+void showMataKuliahBelumDiambilDosenTertentu(addressDosen P, ListMataKuliah M) {
+    addressMataKuliah PM = first(M);
+    while (PM != NULL) {
+        bool found = false;
+        addressMataKuliah temp = mataKuliah(P);
+
+        while (temp != NULL && !found) {
+            if (info(temp).kode == info(PM).kode) {
+                found = true;
+            }
+            temp = next(temp);
+        }
+        if (!found) {
+            cout << "Kode : " << info(PM).kode << endl;
+            cout << "Nama : " << info(PM).nama << endl;
+            cout << "SKS  : " << info(PM).sks << endl;
+            cout << endl;
+        }
+
+        PM = next(PM);
+    }
+}
+
+int countMataKuliahBelumDiambilDosenTertentu(addressDosen P, ListMataKuliah M) {
+    int count = 0;
+    addressMataKuliah PM = first(M);
+    while (PM != NULL) {
+        bool found = false;
+        addressMataKuliah temp = mataKuliah(P);
+
+        while (temp != NULL && !found) {
+            if (info(temp).kode == info(PM).kode) {
+                found = true;
+            }
+            temp = next(temp);
+        }
+
+        if (!found) {
+            count++;
+        }
+
+        PM = next(PM);
+    }
+
+    return count;
 }
 
 // CEK
 void addMatkulToDosen(addressDosen P, addressMataKuliah PM) {
+    addressMataKuliah Q = createElemenMataKuliah(info(PM));
+
     if (mataKuliah(P) == NULL) {
-        mataKuliah(P) = PM;
+        mataKuliah(P) = Q;
     } else {
-        addressMataKuliah temp = mataKuliah(P);
-        while (next(temp) != NULL) {
-            temp = next(temp);
+        addressMataKuliah R = mataKuliah(P);
+        while (next(R) != NULL) {
+            R = next(R);
         }
-        next(temp) = PM;
+        next(R) = Q;
     }
-    next(PM) = NULL;
+}
+
+void showMataKuliahYangDiajarDosenTertentu(addressDosen P) {
+    addressMataKuliah PM = mataKuliah(P);
+    int i = 1;
+    int totalSKS = 0;
+    while (PM != NULL) {
+        totalSKS += info(PM).sks;
+        cout << "Mata Kuliah " << i << " : " << endl;
+        cout << "Kode : " << info(PM).kode << endl;
+        cout << "Nama : " << info(PM).nama << endl;
+        cout << "SKS  : " << info(PM).sks << endl;
+        cout << endl;
+
+        PM = next(PM);
+        i++;
+    }
+    cout << "Total SKS yang diajar: " << totalSKS << endl;
 }
 
 // CEK
 void showAllDosenWithMataKuliah(ListDosen L) {
-    addressDosen P = first(L);
-    int i = 1;
 
-    while (P != NULL) {
-        cout << "Data Dosen : " << i << endl;
-        cout << "Nama   : " << info(P).nama << endl;
-        cout << "Kode   : " << info(P).kode << endl;
-
-        addressMataKuliah PM = mataKuliah(P);
-
-        if (PM == NULL) {
-            cout << "Mata kuliah yang diajar: -\n";
-        } else {
-            cout << "Mata kuliah yang diajar: \n";
-            while (PM != NULL) {
-                cout << "Kode : " << info(PM).kode << endl;
-                cout << "Nama : " << info(PM).nama << endl;
-                cout << "SKS  : " << info(PM).sks << endl;
-                cout << endl;
-                PM = next(PM);
-            }
-        }
-
-        P = next(P);
-        i++;
+    if (isEmpty(L)){
+        cout << "Data dosen kosong, tidak ada data dosen yang bisa ditampilkan" << endl;
         cout << endl;
+    } else {
+        addressDosen P = first(L);
+        int i = 1;
+        cout << "============ Daftar Dosen ============" << endl;
+        while (P != NULL) {
+            cout << "DATA DOSEN " << i << " : " << endl;
+            cout << "Nama   : " << info(P).nama << endl;
+            cout << "Kode   : " << info(P).kode << endl;
+            cout << "Gender : " << info(P).gender << endl;
+
+            addressMataKuliah PM = mataKuliah(P);
+
+            if (PM == NULL) {
+                cout << "Mata kuliah yang diajar: -\n";
+            } else {
+                cout << "Mata kuliah yang diajar: \n";
+                int j = 1;
+                int totalSKS = 0;
+                while (PM != NULL) {
+                    totalSKS += info(PM).sks;
+                    cout << "   MATA KULIAH " << j << " : " << endl;
+                    cout << "       Kode : " << info(PM).kode << endl;
+                    cout << "       Nama : " << info(PM).nama << endl;
+                    cout << "       SKS  : " << info(PM).sks << endl;
+                    cout << endl;
+                    PM = next(PM);
+                    j++;
+                }
+                cout << "Total SKS yang diajar: " << totalSKS << endl;
+            }
+
+            P = next(P);
+            i++;
+            cout << endl;
+        }
     }
+    
+
+    
+}
+
+void insertDataDummy(ListDosen &L, ListMataKuliah &M) {
+    infotypeDosen DummyDosen;
+    DummyDosen.nama = "Faiz Elfahad Kurniawan";
+    DummyDosen.kode = "FEK";
+    DummyDosen.gender = "Laki-Laki";
+
+    addressDosen P = createElemenDosen(DummyDosen);
+    insertFirstDosen(L, P);
+
+    DummyDosen.nama = "Muamar Zidan";
+    DummyDosen.kode = "MZD";
+    DummyDosen.gender = "Laki-Laki";
+
+    P = createElemenDosen(DummyDosen);
+    insertFirstDosen(L, P);
+
+    infotypeMataKuliah DummyMatkul;
+    DummyMatkul.nama = "Algoritma Pemrograman 1";
+    DummyMatkul.kode = "ALPRO-1";
+    DummyMatkul.sks = 4;
+
+    addressMataKuliah PM = createElemenMataKuliah(DummyMatkul);
+    insertFirstMataKuliah(M, PM);
+
+    DummyMatkul.nama = "Struktur Data";
+    DummyMatkul.kode = "STD";
+    DummyMatkul.sks = 4;
+
+    PM = createElemenMataKuliah(DummyMatkul);
+    insertFirstMataKuliah(M, PM);
+
+    addMatkulToDosen(searchDosenByCode(L, "FEK"), searchMatkulByCode(M, "ALPRO-1"));
+    addMatkulToDosen(searchDosenByCode(L, "FEK"), searchMatkulByCode(M, "STD"));
+    addMatkulToDosen(searchDosenByCode(L, "MZD"), searchMatkulByCode(M, "ALPRO-1"));
+}
+
+string toLowerCase(string s) {
+    for (char &c : s) {
+        if (c >= 'A' && c <= 'Z') {
+            c += 32;
+        }
+    }
+
+    return s;
 }
 
 

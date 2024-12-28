@@ -62,18 +62,23 @@ void deleteLastDosen(ListDosen &L, addressDosen &P);
 void showDosen(ListDosen L);
 void searchDosen(ListDosen L, string param, string opsi);
 addressDosen cariDosenByKode(ListDosen L, string kode);
-
+int countMataKuliahBelumDiambilDosenTertentu(addressDosen P, ListMataKuliah M);
 void createListMataKuliah(ListMataKuliah &M);
 addressMataKuliah createElemenMataKuliah(mataKuliah X);
 void insertFirstMataKuliah(ListMataKuliah &M, addressMataKuliah PM);
 void insertLastMataKuliah(ListMataKuliah &M, addressMataKuliah PM);
+void showAllMataKuliah(ListMataKuliah M);
 void hubungkanDosenKeMataKuliah(ListDosen &L, ListMataKuliah &M);
 addressMataKuliah searchMatkulByCode(ListMataKuliah M, string kode);
-void showMataKuliahBelumDiambil(addressDosen P, ListMataKuliah M);
+void showMataKuliahBelumDiambilDosenTertentu(addressDosen P, ListMataKuliah M);
 void addMatkulToDosen(addressDosen P, addressMataKuliah PM);
 void showAllDosenWithMataKuliah(ListDosen L);
 addressDosen searchDosenByCode(ListDosen L, string kode);
 addressDosen searchDosenByName(ListDosen L, string name);
+void showMataKuliahYangDiajarDosenTertentu(addressDosen P);
+
+string toLowerCase(string s);
+void insertDataDummy(ListDosen &L, ListMataKuliah &M);
 
 
 // void insertAfterDosen(ListDosen &L, addressDosen Prec, addressDosen P);
